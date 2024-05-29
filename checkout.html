@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Place - Checkout</title>
+    <link rel="stylesheet" href="CSS/check.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="index.html">Foodie Place</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="dishes.html">Dishes</a></li>
+            <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="checkout-container">
+        <h2>Checkout</h2>
+        <p>Total Amount: <span id="total-amount">$0.00</span></p>
+        <form id="payment-form">
+            <div class="form-row">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-row">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-row">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-row">
+                <label for="card-element">Credit or debit card</label>
+                <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                </div>
+                <!-- Used to display form errors. -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+            <button type="submit">Submit Payment</button>
+        </form>
+    </div>
+
+    <footer>
+        <!-- Footer code goes here -->
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const totalAmount = urlParams.get('totalAmount');
+            document.getElementById('total-amount').textContent = totalAmount;
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up Stripe.js
+            const stripe = Stripe('pk_test_51P1E0RSJ75CUpuIuITEEgfrX2EAYf84bFNMzG12lwULOUeZdxdHBShEP3don7yOiftA4CaVOEQkbZAhhGJU1llPa00BhRo9Ryp');
+            const elements = stripe.elements();
+
+            // Custom styling can be passed to options when creating an Element.
+            const style = {
+                base: {
+                    fontSize: '16px',
+                    color: '#32325d',
+                },
+            };
+
+            // Create an instance of the card Element.
+            const card = elements.create('card', { style });
+
+            // Add an instance of the card Element into the `card-element` div.
+            card.mount('#card-element');
+
+            // Handle form submission.
+            const form = document.getElementById('payment-form');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                alert("Payment was Successful");
+                const { token, error } = await stripe.createToken(card);
+
+                if (error) {
+                    // Inform the user if there was an error.
+                    const errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = error.message;
+                } else {
+                    // Send the token and additional billing information to your server.
+                    // This is where you would submit the token and billing information to your server for further processing (e.g., charge the card and save billing details).
+                    console.log(token);
+                    const formData = new FormData(form);
+                    console.log("Name:", formData.get('name'));
+                    console.log("Email:", formData.get('email'));
+                    console.log("Address:", formData.get('address'));
+                    console.log("Token:", token.id);
+                    // Redirect to a success page or display a success message.
+                }
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodie Place</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="index.html">Foodie Place</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="dishes.html">Dishes</a></li>
+            <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <div class="slider-container">
+        <div class="slider">
+            <img src="img/bg-hero.jpg" class="slide">
+            <img src="img/burger.jpg" class="slide">
+            <img src="img/bg-hero.jpg" class="slide">
+        </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+    <section class="quotes-section">
+        <div class="container">
+            <h2>Food Quotes</h2>
+            <div class="quote">
+                <p>"The only thing I like better than talking about food is eating."</p>
+                <p>- John Walters</p>
+            </div>
+            <div class="quote">
+                <p>"Food is symbolic of love when words are inadequate."</p>
+                <p>- Alan D. Wolfelt</p>
+            </div>
+            <div class="quote">
+                <p>"One cannot think well, love well, sleep well, if one has not dined well."</p>
+                <p>- Virginia Woolf</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Foodie Place. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
